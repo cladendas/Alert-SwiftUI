@@ -135,6 +135,8 @@ struct ContentViewPicker: View {
 
 struct ContentViewPickerNavigation: View {
     @State var section = 0
+    @State var isOnToggle = false
+    
     var settingsTime = ["5 min", "10 min", "15 min", "20 min",
                         "25 min", "30 min", "35 min",
                         "40 min", "45 min", "50 min",
@@ -150,6 +152,10 @@ struct ContentViewPickerNavigation: View {
                     }
                 },
                        label: {Text("Время")})
+                
+                Toggle(isOn: $isOnToggle) {
+                    Text("Авиарежим").foregroundColor(isOnToggle ? Color.orange : Color.gray)
+                }
             }.navigationBarTitle("Настройки")
         }
     }
