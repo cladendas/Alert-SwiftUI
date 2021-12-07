@@ -12,6 +12,7 @@ struct ContentView: View {
     ///@State хранит состояние
     @State var isError = false
     
+    
     var body: some View {
         
         VStack {
@@ -20,16 +21,24 @@ struct ContentView: View {
             Text("Hello, world!")
                 .padding()
         }
-        Button (action: {
+        
+        showAlert()
+    }
+    
+    ///Алерт с двумя кнопками
+    fileprivate func showAlert() -> some View {
+        return Button (action: {
             self.isError = true
-            }, label: {
-                Text("Вход")
-            }).alert(isPresented: $isError, content: {
-                Alert(title: Text("Загрузка"),
-                      message: Text("Вы уверены?"),
-                      primaryButton: .destructive(Text("Да")),
-                                                  secondaryButton: .cancel())
-                })
+        }, label: {
+            Text("Вход")
+        }).alert(isPresented: $isError, content: {
+            Alert(title: Text("Загрузка"),
+                  message: Text("Вы уверены?"),
+                  primaryButton:
+                        .destructive(Text("Да"),
+                                     action: {print("test")}),
+                  secondaryButton: .cancel())
+        })
     }
 }
 
