@@ -79,7 +79,10 @@ struct ContentViewToggle: View {
     @State var isOnToggle = false
         
     var body: some View {
-            
-        Toggle(isOn: $isOnToggle, label: { Text("Показать настройки")}).padding()
+        ///ZStack накладывает вьюхи друг на друга
+        ZStack {
+            RoundedRectangle(cornerRadius: 30).fill(Color.yellow).padding()
+            Toggle(isOn: $isOnToggle, label: { Text("Показать настройки")}).padding()
+        }
     }
 }
