@@ -20,6 +20,7 @@ struct ContentView: View {
             ContentViewAlert()
             ContentViewActionSheet()
             ContentViewToggle()
+            ContentViewPicker()
         }
     }
 }
@@ -92,7 +93,7 @@ struct ContentViewToggle: View {
             
             RoundedRectangle(cornerRadius: 30)
                 .fill(Color.yellow)
-                .frame(width: 400, height: 200)
+                .frame(width: 400, height: 100)
                 .offset(x: isOnToggle ? 200 : 0).padding()
         }.animation(.spring(response: 0.5,
                             dampingFraction: 0.7,
@@ -100,5 +101,22 @@ struct ContentViewToggle: View {
                     value: isOnToggle)
         Toggle(isOn: $isOnToggle,
                label: { Text("Показать настройки")}).padding()
+    }
+}
+
+struct ContentViewPicker: View {
+    
+    @State var section = 0
+    
+    var body: some View {
+        Picker(selection: $section,
+               content: {
+                        Text("5 min")
+                        Text("10 min")
+                        Text("15 min")
+                        Text("20 min")},
+               label: {Text("")}).pickerStyle(.wheel)
+        
+        
     }
 }
