@@ -9,16 +9,23 @@ import SwiftUI
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        
-        VStack {
-            ContentView()
-            ContentViewQ()
-        }
+        ContentView()
     }
 }
 
 struct ContentView: View {
-    
+     
+    var body: some View {
+        VStack {
+            ContentViewAlert()
+            ContentViewActionSheet()
+            ContentViewToggle()
+        }
+    }
+}
+
+struct ContentViewAlert: View {
+
     ///@State хранит состояние
     @State var isError = false
     
@@ -44,7 +51,7 @@ struct ContentView: View {
     }
 }
 
-struct ContentViewQ: View {
+struct ContentViewActionSheet: View {
     
     @State var isError = false
     
@@ -65,5 +72,14 @@ struct ContentViewQ: View {
                                     print("пошла загрузка")}),
                                     .cancel()])
         }
+    }
+}
+struct ContentViewToggle: View {
+        
+    @State var isOnToggle = false
+        
+    var body: some View {
+            
+        Toggle(isOn: $isOnToggle, label: { Text("Показать настройки")}).padding()
     }
 }
