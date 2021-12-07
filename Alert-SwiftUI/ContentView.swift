@@ -18,11 +18,8 @@ struct ContentView: View {
         VStack {
             Text("Hello, world!")
                 .padding()
-            Text("Hello, world!")
-                .padding()
+            showAlert().padding()
         }
-        
-        showAlert()
     }
     
     ///Алерт с двумя кнопками
@@ -30,7 +27,7 @@ struct ContentView: View {
         return Button (action: {
             self.isError = true
         }, label: {
-            Text("Вход")
+            Text("Alert")
         }).alert(isPresented: $isError, content: {
             Alert(title: Text("Загрузка"),
                   message: Text("Вы уверены?"),
@@ -43,9 +40,25 @@ struct ContentView: View {
 }
 
 struct ContentViewQ: View {
+    
+    @State var isError = false
+    
     var body: some View {
         Text("Hello, world!")
             .padding()
+        
+        showActionSheet()
+    }
+    
+    ///ActionSheet с двумя кнопками
+    fileprivate func showActionSheet() -> some View {
+        return Button (action: {
+            self.isError = true
+        }, label: {
+            Text("ActionSheet")
+        }).actionSheet(isPresented: $isError) {
+            ActionSheet(title: Text("Test"))
+        }
     }
 }
 
@@ -53,7 +66,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         
         HStack {
-            
             ContentView()
             ContentViewQ()
         }
