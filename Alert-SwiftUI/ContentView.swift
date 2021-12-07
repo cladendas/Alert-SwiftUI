@@ -17,6 +17,7 @@ struct ContentView: View {
      
     var body: some View {
         VStack {
+            ContentViewPickerNavigation()
             ContentViewAlert()
             ContentViewActionSheet()
             ContentViewToggle()
@@ -129,5 +130,27 @@ struct ContentViewPicker: View {
                 .frame(width: 200, height: 200)
         }
         
+    }
+}
+
+struct ContentViewPickerNavigation: View {
+    @State var section = 0
+    var settingsTime = ["5 min", "10 min", "15 min", "20 min",
+                        "25 min", "30 min", "35 min",
+                        "40 min", "45 min", "50 min",
+                        "55 min", "60 min", "65 min"]
+    
+    var body: some View {
+        NavigationView {
+            Form {
+                Picker(selection: $section,
+                       content: {
+                    ForEach(0..<settingsTime.count) {
+                        Text(self.settingsTime[$0])
+                    }
+                },
+                       label: {Text("Время")})
+            }.navigationBarTitle("Настройки")
+        }
     }
 }
