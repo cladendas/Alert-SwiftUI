@@ -107,14 +107,15 @@ struct ContentViewToggle: View {
 struct ContentViewPicker: View {
     
     @State var section = 0
+    var settingsTime = ["5 min", "10 min", "15 min", "20 min"]
     
     var body: some View {
         Picker(selection: $section,
                content: {
-                        Text("5 min")
-                        Text("10 min")
-                        Text("15 min")
-                        Text("20 min")},
+                            ForEach(0..<settingsTime.count) {
+                                Text(self.settingsTime[$0])
+                            }
+                        },
                label: {Text("")}).pickerStyle(.wheel)
         
         
