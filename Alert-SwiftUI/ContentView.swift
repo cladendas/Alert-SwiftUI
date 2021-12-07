@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        
+        VStack {
+            ContentView()
+            ContentViewQ()
+        }
+    }
+}
+
 struct ContentView: View {
     
     ///@State хранит состояние
@@ -14,12 +24,7 @@ struct ContentView: View {
     
     
     var body: some View {
-        
-        VStack {
-            Text("Hello, world!")
-                .padding()
-            showAlert().padding()
-        }
+        showAlert().padding()
     }
     
     ///Алерт с двумя кнопками
@@ -44,9 +49,6 @@ struct ContentViewQ: View {
     @State var isError = false
     
     var body: some View {
-        Text("Hello, world!")
-            .padding()
-        
         showActionSheet()
     }
     
@@ -57,18 +59,11 @@ struct ContentViewQ: View {
         }, label: {
             Text("ActionSheet")
         }).actionSheet(isPresented: $isError) {
-            ActionSheet(title: Text("Test"))
+            ActionSheet(title: Text("Загрузка"),
+                        message: Text("Вы хотите загрузить?"),
+                        buttons: [.destructive(Text("Загрузить"), action: {
+                                    print("пошла загрузка")}),
+                                    .cancel()])
         }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        
-        HStack {
-            ContentView()
-            ContentViewQ()
-        }
-        
     }
 }
