@@ -107,17 +107,27 @@ struct ContentViewToggle: View {
 struct ContentViewPicker: View {
     
     @State var section = 0
-    var settingsTime = ["5 min", "10 min", "15 min", "20 min"]
+    var settingsTime = ["5 min", "10 min", "15 min", "20 min",
+                        "25 min", "30 min", "35 min",
+                        "40 min", "45 min", "50 min",
+                        "55 min", "60 min", "65 min"]
     
     var body: some View {
-        Picker(selection: $section,
-               content: {
-                            ForEach(0..<settingsTime.count) {
-                                Text(self.settingsTime[$0])
-                            }
-                        },
-               label: {Text("")}).pickerStyle(.wheel)
         
+        HStack {
+            Text("Время - \(settingsTime[section])").padding()
+            
+            
+            Picker(selection: $section,
+                   content: {
+                ForEach(0..<settingsTime.count) {
+                    Text(self.settingsTime[$0])
+                }
+            },
+                   label: {Text("")})
+                .pickerStyle(.wheel)
+                .frame(width: 200, height: 200)
+        }
         
     }
 }
