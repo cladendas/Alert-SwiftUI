@@ -25,10 +25,11 @@ struct ContentView: View {
             }, label: {
                 Text("Вход")
             }).alert(isPresented: $isError, content: {
-                Alert(title: Text("TEST1"))
+                Alert(title: Text("Загрузка"),
+                      message: Text("Вы уверены?"),
+                      primaryButton: .destructive(Text("Да")),
+                                                  secondaryButton: .cancel())
                 })
-
-
     }
 }
 
