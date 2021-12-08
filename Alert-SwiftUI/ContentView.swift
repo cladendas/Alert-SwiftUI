@@ -17,11 +17,41 @@ struct ContentView: View {
      
     var body: some View {
         VStack {
-            ContentViewPickerNavigation()
+//            ContentViewPickerNavigation()
             ContentViewAlert()
             ContentViewActionSheet()
             ContentViewToggle()
-            ContentViewPicker()
+//            ContentViewPicker()
+            ContentViewSlider()
+        }
+    }
+}
+
+struct ContentViewPickerNavigation: View {
+    @State var section = 0
+    @State var isOnToggle = false
+    
+    var settingsTime = ["5 min", "10 min", "15 min", "20 min",
+                        "25 min", "30 min", "35 min",
+                        "40 min", "45 min", "50 min",
+                        "55 min", "60 min", "65 min"]
+    
+    var body: some View {
+        NavigationView {
+            Form {
+                Picker(selection: $section,
+                       content: {
+                    ForEach(0..<settingsTime.count) {
+                        Text(self.settingsTime[$0])
+                    }
+                },
+                       label: {Text("Время")})
+                
+                Toggle(isOn: $isOnToggle) {
+                    Text("Авиарежим").foregroundColor(isOnToggle ? Color.orange : Color.gray)
+                }
+            }
+            .navigationBarTitle("Настройки")
         }
     }
 }
@@ -90,12 +120,13 @@ struct ContentViewToggle: View {
                     Text("Профиль").padding()
                 }
                 Spacer()
-            }
+            }.padding()
             
             RoundedRectangle(cornerRadius: 30)
                 .fill(Color.yellow)
                 .frame(width: 400, height: 100)
                 .offset(x: isOnToggle ? 200 : 0).padding()
+            
         }.animation(.spring(response: 0.5,
                             dampingFraction: 0.7,
                             blendDuration: 0.4),
@@ -126,37 +157,16 @@ struct ContentViewPicker: View {
                 }
             },
                    label: {Text("")})
-                .pickerStyle(.wheel)
-                .frame(width: 200, height: 200)
+            .pickerStyle(.wheel)
+            .frame(width: 200, height: 50)
         }
-        
     }
 }
 
-struct ContentViewPickerNavigation: View {
-    @State var section = 0
-    @State var isOnToggle = false
-    
-    var settingsTime = ["5 min", "10 min", "15 min", "20 min",
-                        "25 min", "30 min", "35 min",
-                        "40 min", "45 min", "50 min",
-                        "55 min", "60 min", "65 min"]
+struct ContentViewSlider: View {
+    @State private var progress: Float = 0
     
     var body: some View {
-        NavigationView {
-            Form {
-                Picker(selection: $section,
-                       content: {
-                    ForEach(0..<settingsTime.count) {
-                        Text(self.settingsTime[$0])
-                    }
-                },
-                       label: {Text("Время")})
-                
-                Toggle(isOn: $isOnToggle) {
-                    Text("Авиарежим").foregroundColor(isOnToggle ? Color.orange : Color.gray)
-                }
-            }.navigationBarTitle("Настройки")
-        }
+        Slider(value: $progress).padding()
     }
 }
