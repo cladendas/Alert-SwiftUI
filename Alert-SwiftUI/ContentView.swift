@@ -5,7 +5,48 @@
 //  Created by cladendas on 07.12.2021.
 //
 
+import AVFoundation
 import SwiftUI
+
+///Плеер. Есть функциия: старт, стоп, выбор времени песли для начала проигрывания
+class PlayerViewModel: ObservableObject {
+    ///@Published позволит вьюхе следить за значением этого св-ва
+    @Published public var maxDuration: Float = 0.01
+    @Published public var currentTime: Float = 0
+    
+    private var player: AVAudioPlayer?
+    
+    public func play() {
+        playSong(name: "song")
+        player?.play()
+    }
+    
+    public func stop() {
+        player?.stop()
+    }
+    
+    ///выбор времени в песни для начала проигрывания
+    public func setTime(value: Float) {
+        guard let time = TimeInterval(exactly: value) else { return }
+        
+        player?.currentTime = time
+        currentTime = Float(time)
+        player?.play()
+    }
+    
+    private func playSong(name: String) {
+        guard let audioPath = Bundle.main.path(forResource: name,
+                                               ofType: "mp3") else { return }
+                
+        do {
+            try player = AVAudioPlayer(contentsOf: URL(fileURLWithPath: audioPath))
+            maxDuration = Float(player?.duration ?? 0.0)
+            
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -164,9 +205,50 @@ struct ContentViewPicker: View {
 }
 
 struct ContentViewSlider: View {
-    @State private var progress: Float = 0
+    @State private var progressTop: Float = 0
+    @State private var progressBottom: Float = 0
+    ///Плеер
+    @ObservedObject var viewModel = PlayerViewModel()
     
     var body: some View {
-        Slider(value: $progress).padding()
+        
+        VStack {
+            
+            Slider(value: $progressTop).padding()
+            
+            Text("Время - \(progressBottom)")
+            
+            Slider(value: Binding(get: {
+                self.progressBottom
+            }, set: {
+                self.progressBottom = $0
+                self.viewModel.setTime(value: $0)
+                
+                //TODO: сделать изменение ползунка одновременно с музыкой
+            }),
+                   in: 0...viewModel.maxDuration,
+                   step: 0.01).padding()
+            
+            HStack {
+                Button {
+                    self.viewModel.play()
+                } label: {
+                    Text("Play").foregroundColor(Color.white)
+                }
+                .frame(width: 100, height: 50)
+                .background(Color.orange)
+                .cornerRadius(10)
+
+                Button {
+                    self.viewModel.stop()
+                } label: {
+                    Text("Stop").foregroundColor(Color.white)
+                }
+                .frame(width: 100, height: 50)
+                .background(Color.orange)
+                .cornerRadius(10)
+            }
+        }
+        
     }
 }
