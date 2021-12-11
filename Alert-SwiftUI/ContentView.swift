@@ -297,7 +297,8 @@ struct DetailView: View {
                 //вернёт обратно к родителю
                 self.presentation.wrappedValue.dismiss()
             }
-        }
+        
+        }.navigationBarBackButtonHidden(true) //убирает в навигации кнопку НАЗАД
     }
 }
 
