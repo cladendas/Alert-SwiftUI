@@ -61,7 +61,7 @@ struct ContentView: View {
 //            ContentViewPickerNavigation()
             ContentViewAlert()
             ContentViewActionSheet()
-            ContentViewToggle()
+//            ContentViewToggle()
 //            ContentViewPicker()
 //            ContentViewSlider()
             ContentViewSegment()
@@ -257,17 +257,27 @@ struct ContentViewSlider: View {
 struct ContentViewSegment: View {
     @State var segmentIndex = 0
     var company = ["Nike", "Puma", "Reebok"]
+    var sneakers = ["nike", "puma", "reebok"]
     
     var body: some View {
-        Picker(selection: $segmentIndex) {
-            ForEach(0..<company.count) {
-                Text(self.company[$0]).tag($0)
+        
+        VStack {
+            Text("Кроссовик - \(company[segmentIndex])")
+            
+            Image(sneakers[segmentIndex])
+                .resizable()
+                .frame(width: 300, height: 300)
+            
+            Picker(selection: $segmentIndex) {
+                ForEach(0..<company.count) {
+                    Text(self.company[$0]).tag($0)
+                }
+            } label: {
+                Text("")
             }
-        } label: {
-            Text("")
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
         }
-        .pickerStyle(SegmentedPickerStyle())
-        .padding()
-
+        
     }
 }
