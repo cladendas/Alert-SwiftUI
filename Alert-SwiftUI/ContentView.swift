@@ -256,6 +256,8 @@ struct ContentViewSlider: View {
 
 struct ContentViewSegment: View {
     @State var segmentIndex = 0
+    @State var offSetX = 0
+    
     var company = ["Nike", "Puma", "Reebok"]
     var sneakers = ["nike", "puma", "reebok"]
     
@@ -263,12 +265,29 @@ struct ContentViewSegment: View {
         
         VStack {
             Text("Кроссовик - \(company[segmentIndex])")
+        
+            ZStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.gray)
+                    .padding()
+                    .offset(x: CGFloat(offSetX))
+                
+                Image(sneakers[segmentIndex])
+                    .resizable()
+                    .frame(width: 300, height: 300)
+                    .offset(x: CGFloat(offSetX))
+            }.animation(.spring(response: 0.6,
+                                dampingFraction: 0.5,
+                                blendDuration: 0.4),
+                        value: segmentIndex)
             
-            Image(sneakers[segmentIndex])
-                .resizable()
-                .frame(width: 300, height: 300)
-            
-            Picker(selection: $segmentIndex) {
+            Picker(selection: Binding(get: {
+                self.segmentIndex
+            }, set: { newValue in
+                self.segmentIndex = newValue
+                self.offSetX = -500
+                self.moveBack()
+            })) {
                 ForEach(0..<company.count) {
                     Text(self.company[$0]).tag($0)
                 }
@@ -278,6 +297,11 @@ struct ContentViewSegment: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding()
         }
-        
+    }
+    
+    private func moveBack() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.offSetX = 0
+        }
     }
 }
