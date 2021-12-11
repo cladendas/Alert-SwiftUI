@@ -284,18 +284,44 @@ struct ContentViewActivity: View {
 }
 
 struct DetailView: View {
+    ///с помощью @Environment(\.presentationMode) можно передать в переменную стэк
+    @Environment(\.presentationMode) var presentation
+    
+    var text: String
+    
     var body: some View {
-        Text("second View")
+        
+        VStack(spacing: 30) {
+            Text("second View \(text)")
+            Button("Назад в меню") {
+                //вернёт обратно к родителю
+                self.presentation.wrappedValue.dismiss()
+            }
+        }
     }
 }
 
 struct ContentViewNavigationView: View {
     
+    let coffee = "Кофе"
+    let tea = "Чай"
+    
     var body: some View {
         NavigationView {
-            NavigationLink("Чай") {
-                DetailView()
-            }.navigationTitle("Меню")
+            
+            VStack(spacing: 30) {
+                
+                Text("Что желаете?")
+                
+                NavigationLink(coffee) {
+                    //типа передаются данные в новое вью
+                    DetailView(text: coffee)
+                }.navigationTitle("Меню")
+                
+                NavigationLink(tea) {
+                    DetailView(text: tea)
+                }.navigationTitle("Меню")
+            }
         }
     }
 }
