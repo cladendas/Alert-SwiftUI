@@ -267,12 +267,17 @@ struct ContentViewSegment: View {
 
 struct ContentViewActivity: View {
     @State private var isSharedPresented = false
+    let customActivity = ActivityViewCustomActivityView(title: "Телеграмм",
+                                                        imageName: "telegram") {
+        print("отправка в телеграмм")
+    }
     
     var body: some View {
         Button ("press") {
             self.isSharedPresented = true
         }.sheet(isPresented: $isSharedPresented) {
-            ActivityView(activityItems: ["message test"])
+            ActivityView(activityItems: ["message test"],
+                         applicationActivities: [self.customActivity])
         }
     }
 }
