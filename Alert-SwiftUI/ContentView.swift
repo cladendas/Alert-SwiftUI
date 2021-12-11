@@ -23,7 +23,8 @@ struct ContentView: View {
 //            ContentViewPicker()
 //            ContentViewSlider()
 //            ContentViewSegment()
-            ContentViewActivity()
+//            ContentViewActivity()
+            ContentViewNavigationView()
         }
     }
 }
@@ -278,6 +279,23 @@ struct ContentViewActivity: View {
         }.sheet(isPresented: $isSharedPresented) {
             ActivityView(activityItems: ["message test"],
                          applicationActivities: [self.customActivity])
+        }
+    }
+}
+
+struct DetailView: View {
+    var body: some View {
+        Text("second View")
+    }
+}
+
+struct ContentViewNavigationView: View {
+    
+    var body: some View {
+        NavigationView {
+            NavigationLink("Чай") {
+                DetailView()
+            }.navigationTitle("Меню")
         }
     }
 }
