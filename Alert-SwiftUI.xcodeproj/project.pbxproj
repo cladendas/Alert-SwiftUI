@@ -11,6 +11,8 @@
 		6AA49AFB275F4E10005BB14A /* Alert_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA49AFA275F4E10005BB14A /* Alert_SwiftUIApp.swift */; };
 		6AA49AFD275F4E10005BB14A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA49AFC275F4E10005BB14A /* ContentView.swift */; };
 		6AA49AFF275F4E14005BB14A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AA49AFE275F4E14005BB14A /* Assets.xcassets */; };
+		6AB3793527650C2000AFD53C /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3793427650C2000AFD53C /* ActivityView.swift */; };
+		6AB3793727650F0000AFD53C /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3793627650F0000AFD53C /* PlayerViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		6AA49AFA275F4E10005BB14A /* Alert_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert_SwiftUIApp.swift; sourceTree = "<group>"; };
 		6AA49AFC275F4E10005BB14A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6AA49AFE275F4E14005BB14A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6AB3793427650C2000AFD53C /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		6AB3793627650F0000AFD53C /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,8 @@
 				6A707140276174990056CF90 /* Preview Content */,
 				6AA49AFA275F4E10005BB14A /* Alert_SwiftUIApp.swift */,
 				6AA49AFC275F4E10005BB14A /* ContentView.swift */,
+				6AB3793627650F0000AFD53C /* PlayerViewModel.swift */,
+				6AB3793427650C2000AFD53C /* ActivityView.swift */,
 				6AA49AFE275F4E14005BB14A /* Assets.xcassets */,
 			);
 			path = "Alert-SwiftUI";
@@ -140,7 +146,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6AA49AFD275F4E10005BB14A /* ContentView.swift in Sources */,
+				6AB3793727650F0000AFD53C /* PlayerViewModel.swift in Sources */,
 				6AA49AFB275F4E10005BB14A /* Alert_SwiftUIApp.swift in Sources */,
+				6AB3793527650C2000AFD53C /* ActivityView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

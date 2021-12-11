@@ -5,48 +5,7 @@
 //  Created by cladendas on 07.12.2021.
 //
 
-import AVFoundation
 import SwiftUI
-
-///Плеер. Есть функциия: старт, стоп, выбор времени песли для начала проигрывания
-class PlayerViewModel: ObservableObject {
-    ///@Published позволит вьюхе следить за значением этого св-ва
-    @Published public var maxDuration: Float = 0.01
-    @Published public var currentTime: Float = 0
-    
-    private var player: AVAudioPlayer?
-    
-    public func play() {
-        playSong(name: "song")
-        player?.play()
-    }
-    
-    public func stop() {
-        player?.stop()
-    }
-    
-    ///выбор времени в песни для начала проигрывания
-    public func setTime(value: Float) {
-        guard let time = TimeInterval(exactly: value) else { return }
-        
-        player?.currentTime = time
-        currentTime = Float(time)
-        player?.play()
-    }
-    
-    private func playSong(name: String) {
-        guard let audioPath = Bundle.main.path(forResource: name,
-                                               ofType: "mp3") else { return }
-                
-        do {
-            try player = AVAudioPlayer(contentsOf: URL(fileURLWithPath: audioPath))
-            maxDuration = Float(player?.duration ?? 0.0)
-            
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -55,16 +14,16 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct ContentView: View {
-     
     var body: some View {
         VStack {
 //            ContentViewPickerNavigation()
-            ContentViewAlert()
-            ContentViewActionSheet()
+//            ContentViewAlert()
+//            ContentViewActionSheet()
 //            ContentViewToggle()
 //            ContentViewPicker()
 //            ContentViewSlider()
-            ContentViewSegment()
+//            ContentViewSegment()
+            ContentViewActivity()
         }
     }
 }
@@ -302,6 +261,18 @@ struct ContentViewSegment: View {
     private func moveBack() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.offSetX = 0
+        }
+    }
+}
+
+struct ContentViewActivity: View {
+    @State private var isSharedPresented = false
+    
+    var body: some View {
+        Button ("press") {
+            self.isSharedPresented = true
+        }.sheet(isPresented: $isSharedPresented) {
+            ActivityView(activityItems: ["message test"])
         }
     }
 }
