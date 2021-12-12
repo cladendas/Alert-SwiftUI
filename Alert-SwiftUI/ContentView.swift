@@ -286,23 +286,46 @@ struct ContentViewActivity: View {
 struct DetailView: View {
     ///с помощью @Environment(\.presentationMode) можно передать в переменную стэк
     @Environment(\.presentationMode) var presentation
+    @EnvironmentObject var userBuy: UserBuy
     
     var text: String
     
     var body: some View {
         
         VStack(spacing: 30) {
-            Text("second View \(text)")
-            Button("Назад в меню") {
+            
+            Text("Купить \(text) \(userBuy.cups) шт")
+            
+            .navigationBarItems(
+                leading:
+                    Button("в меню") {
                 //вернёт обратно к родителю
                 self.presentation.wrappedValue.dismiss()
-            }
-        
-        }.navigationBarBackButtonHidden(true) //убирает в навигации кнопку НАЗАД
+            },
+                trailing:
+                    HStack {
+                        Button("-") {
+                            guard userBuy.cups > 0 else { return }
+                            userBuy.cups -= 1
+                        }
+                        
+                        Button("+") {
+                            userBuy.cups += 1
+                        }
+                    }
+            )
+        }
+        .navigationBarBackButtonHidden(true) //убирает в навигации кнопку НАЗАД
+        //срабатывает, когда вью появляется
+        .onAppear {
+            self.userBuy.cups = 0
+        }
     }
 }
 
 struct ContentViewNavigationView: View {
+    ///@ObservedObject подходит для хранения состояния более сложных сущностей. Для простых сущностей используется @State
+    @ObservedObject var userBuy = UserBuy()
     
     let coffee = "Кофе"
     let tea = "Чай"
@@ -311,6 +334,8 @@ struct ContentViewNavigationView: View {
         NavigationView {
             
             VStack(spacing: 30) {
+                
+                Text("Вы выбрали \(userBuy.cups) шт")
                 
                 Text("Что желаете?")
                 
@@ -324,5 +349,6 @@ struct ContentViewNavigationView: View {
                 }.navigationTitle("Меню")
             }
         }
+        .environmentObject(userBuy) //environmentObject() позволяет таскать с собой указанный объект
     }
 }
