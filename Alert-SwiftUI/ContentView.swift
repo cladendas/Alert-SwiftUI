@@ -327,6 +327,8 @@ struct ContentViewNavigationView: View {
     ///@ObservedObject подходит для хранения состояния более сложных сущностей. Для простых сущностей используется @State
     @ObservedObject var userBuy = UserBuy()
     
+    @State var selector: String?
+    
     let coffee = "Кофе"
     let tea = "Чай"
     
@@ -347,6 +349,25 @@ struct ContentViewNavigationView: View {
                 NavigationLink(tea) {
                     DetailView(text: tea)
                 }.navigationTitle("Меню")
+                
+                NavigationLink(tag: "act1",
+                               selection: $selector,
+                               destination: { DetailView(text: coffee) },
+                               label: { EmptyView() })
+                
+                NavigationLink(destination: DetailView(text: tea),
+                               tag: "act2",
+                               selection: $selector,
+                               label: { EmptyView() })
+                
+                //типа по нажатию кнопки отправляетя запрос и через 3 секунды приходи ответ с act1
+                //как только придёт ответ, отработает один из NavigationLink, которые работают по тегу
+                Button("GO") {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        self.selector = "act1"
+                    }
+                    
+                }
             }
         }
         .environmentObject(userBuy) //environmentObject() позволяет таскать с собой указанный объект
