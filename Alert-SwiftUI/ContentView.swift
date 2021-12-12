@@ -329,6 +329,8 @@ struct ContentViewNavigationView: View {
     
     @State var selector: String?
     
+    @State var isShow = false
+    
     let coffee = "Кофе"
     let tea = "Чай"
     
@@ -350,23 +352,35 @@ struct ContentViewNavigationView: View {
                     DetailView(text: tea)
                 }.navigationTitle("Меню")
                 
+                //для демонстрации перехода по тегу
                 NavigationLink(tag: "act1",
                                selection: $selector,
                                destination: { DetailView(text: coffee) },
                                label: { EmptyView() })
                 
+                //для демонстрации перехода по тегу
                 NavigationLink(destination: DetailView(text: tea),
                                tag: "act2",
                                selection: $selector,
                                label: { EmptyView() })
                 
+                //для демонстрации перехода по флагу
+                NavigationLink(isActive: $isShow,
+                               destination: { DetailView(text: coffee) },
+                               label: { EmptyView() })
+                
                 //типа по нажатию кнопки отправляетя запрос и через 3 секунды приходи ответ с act1
                 //как только придёт ответ, отработает один из NavigationLink, которые работают по тегу
-                Button("GO") {
+                Button("GO_1") {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                         self.selector = "act1"
                     }
-                    
+                }
+                
+                Button("GO_2") {
+                    DispatchQueue.main.asyncAfter(deadline: .now()) {
+                        self.selector = "act1"
+                    }
                 }
             }
         }
